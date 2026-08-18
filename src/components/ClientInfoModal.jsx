@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, User, Building, Globe, Calendar, Briefcase, FileText, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, User, Building, Globe, Calendar, Briefcase, FileText, Check, Mail } from 'lucide-react';
 
 export default function ClientInfoModal({
   isOpen,
@@ -8,6 +8,10 @@ export default function ClientInfoModal({
   onSaveClientInfo
 }) {
   const [formData, setFormData] = useState({ ...clientInfo });
+
+  useEffect(() => {
+    setFormData({ ...clientInfo });
+  }, [clientInfo, isOpen]);
 
   if (!isOpen) return null;
 
@@ -37,7 +41,7 @@ export default function ClientInfoModal({
                 Project & Client Information
               </h3>
               <p className="text-xs text-slate-400">
-                Metadata included in the discovery brief header
+                Metadata included in the discovery brief header & submission
               </p>
             </div>
           </div>
@@ -69,6 +73,23 @@ export default function ClientInfoModal({
               />
             </div>
 
+            {/* Client Email */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5 text-sky-400" />
+                Contact Email
+              </label>
+              <input
+                type="email"
+                value={formData.email || ''}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="e.g. client@company.com"
+                className="glass-input rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-500"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Company Name */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
@@ -83,9 +104,7 @@ export default function ClientInfoModal({
                 className="glass-input rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-500"
               />
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Current Website */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
@@ -100,7 +119,9 @@ export default function ClientInfoModal({
                 className="glass-input rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-500"
               />
             </div>
+          </div>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Target Launch Date */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
@@ -115,9 +136,7 @@ export default function ClientInfoModal({
                 className="glass-input rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-500"
               />
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Industry */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
@@ -132,21 +151,21 @@ export default function ClientInfoModal({
                 className="glass-input rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-500"
               />
             </div>
+          </div>
 
-            {/* Prepared By */}
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-                <FileText className="w-3.5 h-3.5 text-sky-400" />
-                Prepared By (Agency/Lead)
-              </label>
-              <input
-                type="text"
-                value={formData.preparedBy || ''}
-                onChange={(e) => setFormData({ ...formData, preparedBy: e.target.value })}
-                placeholder="INCEPTION Discovery Team"
-                className="glass-input rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-500"
-              />
-            </div>
+          {/* Prepared By */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
+              <FileText className="w-3.5 h-3.5 text-sky-400" />
+              Prepared By (Agency/Lead)
+            </label>
+            <input
+              type="text"
+              value={formData.preparedBy || ''}
+              onChange={(e) => setFormData({ ...formData, preparedBy: e.target.value })}
+              placeholder="INCEPTION Discovery Team"
+              className="glass-input rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-500"
+            />
           </div>
 
           {/* Internal Notes */}
